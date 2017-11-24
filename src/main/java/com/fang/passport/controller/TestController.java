@@ -16,7 +16,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fang.passport.service.GetUserService;
 import com.fang.passport.vo.TestInVo;
 
 /**
@@ -42,9 +41,6 @@ public class TestController {
   private Environment environment;
 
   @Autowired
-  private GetUserService getUserService;
-
-  @Autowired
   @Qualifier("dataSourceR")
   private DataSource dataSourceR;
 
@@ -58,7 +54,6 @@ public class TestController {
     System.out.println(uuid);
     System.out.println(init);
     System.out.println(environment.getProperty("server.port"));
-    System.out.println(getUserService.getUserNameById(10));
     System.out.println(dataSourceR.getConnection().getMetaData().getUserName());
     System.out.println(dataSourceW.getConnection().getMetaData().getUserName());
     return "靳石磊";
