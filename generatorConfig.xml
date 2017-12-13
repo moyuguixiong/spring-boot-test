@@ -11,7 +11,7 @@
   </commentGenerator>
   <!--数据库链接地址账号密码 -->
   <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-   connectionURL="jdbc:mysql://127.0.0.1:3306/test2" userId="root"
+   connectionURL="jdbc:mysql://127.0.0.1:3306/database_0" userId="root"
    password="123456">
   </jdbcConnection>
   <javaTypeResolver>
@@ -45,7 +45,11 @@
    enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
    selectByExampleQueryId="false"></table> -->
 
-  <table tableName="user" domainObjectName="MyUser"
+  <table tableName="svc_order_0" domainObjectName="SvcOrder"
+   enableCountByExample="true" enableUpdateByExample="true"
+   enableDeleteByExample="true" enableSelectByExample="true"
+   selectByExampleQueryId="true"></table>
+  <table tableName="svc_order_item_0" domainObjectName="SvcOrderItem"
    enableCountByExample="true" enableUpdateByExample="true"
    enableDeleteByExample="true" enableSelectByExample="true"
    selectByExampleQueryId="true"></table>

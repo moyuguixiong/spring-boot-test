@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
-// 在类MybatisConfig中的SqlSessionFactory对象生成后再去扫描，否则会报错
 @AutoConfigureAfter(value = {MybatisConfig.class})
 public class MybatisScannerConfig {
 
+  // 在类MybatisConfig中的SqlSessionFactory对象生成后再去扫描，否则会报错
   @Bean
   public MapperScannerConfigurer getMapperScannerConfigurer() {
     MapperScannerConfigurer scanner = new MapperScannerConfigurer();
