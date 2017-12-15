@@ -3,6 +3,8 @@ package com.fang.passport;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,17 +31,72 @@ public class SpringBootTestApplicationTests {
 
   @Test
   @Rollback(false)
-  public void contextLoads() {
-    for (int i = 0; i < 100; i++) {
+  public void add() {
+    SvcOrder order = new SvcOrder();
+    order.setOrderId(1000035L);
+    // order.setOrderId(1000036L);
+    order.setOrderDesc("1000035test");
+    svcOrderService.add(order);
+  }
+
+  @Test
+  @Rollback(false)
+  public void addBatch() {
+    List<SvcOrder> list = new ArrayList<SvcOrder>();
+    for (int i = 10000; i < 10020; i++) {
       SvcOrder order = new SvcOrder();
-      // order.setOrderId((long) (i + 1));
+      order.setOrderId((long) (i + 1));
       order.setOrderDesc("test");
-      svcOrderService.add(order);
+      list.add(order);
     }
-    // SvcOrder svcOrder = svcOrderService.getById(147697479394000896L);
-    // if (svcOrder != null) {
-    // System.out.println(svcOrder.getOrderId() + ":" + svcOrder.getOrderDesc());
-    // }
+    svcOrderService.addBatch(list);
+  }
+
+  @Test
+  public void selectOne() {
+    SvcOrder svcOrder = svcOrderService.getById(10001L);
+    if (svcOrder != null) {
+      System.out.println("查询数据：" + svcOrder.getOrderId() + "," + svcOrder.getOrderDesc());
+    }
+  }
+
+  @Test
+  public void selectBatch() {
+    List<Long> orderIdList = new ArrayList<Long>();
+    for (int i = 10000; i < 10009; i++) {
+      if ((i + 1) % 2 == 0) {
+        orderIdList.add((long) (i + 1));
+      }
+    }
+    for (int i = 10010; i < 10020; i++) {
+      if ((i + 1) % 2 == 1) {
+        orderIdList.add((long) (i + 1));
+      }
+    }
+    if (orderIdList != null && orderIdList.size() > 0) {
+      System.out.println("要查询的orderId:");
+      for (Long orderId : orderIdList) {
+        System.out.println("orderId:" + orderId);
+      }
+    }
+
+    List<SvcOrder> orderList = svcOrderService.getByIds(orderIdList);
+    if (orderList != null && orderList.size() > 0) {
+      for (SvcOrder svcOrder : orderList) {
+        System.out.println("查询数据：" + svcOrder.getOrderId() + "," + svcOrder.getOrderDesc());
+      }
+    }
+  }
+
+  @Test
+  public void selectByUnShardingColumn() {
+    List<SvcOrder> list = svcOrderService.getByDesc("test");
+    if (list != null && list.size() > 0) {
+      System.out.println("查询总数量：" + list.size());
+      for (SvcOrder svcOrder : list) {
+        System.out.println("查询数据：" + svcOrder.getOrderId() + "," + svcOrder.getOrderDesc());
+      }
+    }
   }
 
   @Test

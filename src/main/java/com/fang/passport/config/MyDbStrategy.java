@@ -26,14 +26,13 @@ public class MyDbStrategy implements PreciseShardingAlgorithm<Long> {
   public String doSharding(Collection<String> availableTargetNames,
                            PreciseShardingValue<Long> shardingValue) {
 
-    System.out.println(shardingValue.getLogicTableName());
-    System.out.println(shardingValue.getColumnName());
-    System.out.println(shardingValue.getValue());
+    // System.out.println(shardingValue.getLogicTableName());
+    // System.out.println(shardingValue.getColumnName());
+    // System.out.println(shardingValue.getValue());
     long value = shardingValue.getValue();
     if (value > 10) {
       value = value / 10;
     }
-    System.out.println(value);
     for (String tableName : availableTargetNames) {
       if (tableName.equals(shardingValue.getLogicTableName() + "_" + (value % 2))) {
         return tableName;
